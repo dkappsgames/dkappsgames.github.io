@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>MYCV – Resume builder</title>
+<meta name="description" content="MYCV: write your resume on your phone, pick a template and share it as a polished PDF.">
+<meta property="og:title" content="MYCV – Resume builder">
+<meta property="og:description" content="Write your resume on your phone, pick a template and share it as a polished PDF.">
+<meta property="og:image" content="https://dkappsgames.com/images/mycv.png">
+<link rel="icon" href="/images/mycv.png">
+<style>
+  :root { --primary: #29909A; --primary-dark: #1f6f77; --accent: #E26C28; --text: #2C2C2E; --muted: #767676; --bg: #ffffff; --soft: #f4f7f7; --border: #e1e2e5; --card: #ffffff; }
+  @media (prefers-color-scheme: dark) { :root { --primary: #3fb2bc; --primary-dark: #8fd3d9; --text: #e6e6e6; --muted: #a8a8a8; --bg: #121212; --soft: #1b2122; --border: #333; --card: #1c1c1e; } }
+  * { box-sizing: border-box; }
+  body { font: 16px/1.6 -apple-system, "Inter", "Segoe UI", sans-serif; margin: 0; color: var(--text); background: var(--bg); }
+  a { color: var(--primary); }
+  .wrap { max-width: 64rem; margin: 0 auto; padding: 0 1rem; }
+  header.top { display: flex; align-items: center; gap: .6rem; padding: 1rem 0; }
+  header.top img { width: 32px; height: 32px; }
+  header.top strong { font-size: 1.15rem; letter-spacing: .02em; }
+  header.top nav { margin-left: auto; font-size: .95rem; }
+  header.top nav a { color: var(--muted); text-decoration: none; margin-left: 1rem; }
+
+  .hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 2rem; align-items: center; padding: 2.5rem 0 3.5rem; }
+  .hero h1 { font-size: clamp(2rem, 5vw, 3.1rem); line-height: 1.15; margin: 0 0 1rem; }
+  .hero h1 span { color: var(--primary); }
+  .hero p.lead { font-size: 1.15rem; color: var(--muted); margin: 0 0 1.75rem; max-width: 32rem; }
+  .cta { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; }
+  .btn { display: inline-flex; align-items: center; gap: .5rem; padding: .75rem 1.25rem; border-radius: 10px; font-weight: 600; text-decoration: none; }
+  .btn-primary { background: var(--primary); color: #fff; }
+  .btn-primary:hover { background: #237d86; }
+  .btn-ghost { border: 1px solid var(--border); color: var(--muted); cursor: default; }
+  .btn svg { width: 20px; height: 20px; fill: currentColor; }
+
+  /* Phone mockup with a sample resume */
+  .phone { justify-self: center; width: 260px; aspect-ratio: 9 / 18.5; border-radius: 36px; background: #1a1a1a; padding: 12px; box-shadow: 0 24px 48px rgba(0,0,0,.18); border: 1px solid var(--border); }
+  .screen { height: 100%; border-radius: 26px; background: #fff; overflow: hidden; display: flex; color: #2C2C2E; }
+  .sheet-side { width: 34%; background: #29909A; padding: 18px 8px; color: #fff; }
+  .avatar { width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,.35); margin: 0 auto 14px; }
+  .sheet-main { flex: 1; padding: 18px 10px; }
+  .l { height: 6px; border-radius: 3px; background: #d8dcdd; margin-bottom: 6px; }
+  .sheet-side .l { background: rgba(255,255,255,.45); }
+  .l.h { height: 10px; background: #2C2C2E; width: 80%; margin-bottom: 8px; }
+  .l.sub { background: #E26C28; width: 55%; margin-bottom: 16px; }
+  .l.sec { height: 7px; background: #29909A; width: 45%; margin-top: 14px; }
+  .sheet-side .l.sec { background: #fff; width: 70%; }
+
+  section.band { background: var(--soft); padding: 3.5rem 0; }
+  h2 { font-size: 1.6rem; margin: 0 0 .5rem; text-align: center; }
+  .sub-h { text-align: center; color: var(--muted); margin: 0 auto 2.25rem; max-width: 36rem; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.25rem; }
+  .card .ic { width: 40px; height: 40px; border-radius: 10px; background: rgba(41,144,154,.14); color: var(--primary); display: grid; place-items: center; margin-bottom: .75rem; }
+  .card .ic svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .card h3 { margin: 0 0 .35rem; font-size: 1.05rem; }
+  .card p { margin: 0; color: var(--muted); font-size: .95rem; }
+
+  .steps { padding: 3.5rem 0; }
+  .steps ol { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; counter-reset: s; }
+  .steps li { counter-increment: s; text-align: center; }
+  .steps li::before { content: counter(s); display: grid; place-items: center; width: 44px; height: 44px; margin: 0 auto .75rem; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; font-size: 1.1rem; }
+  .steps h3 { margin: 0 0 .25rem; font-size: 1.05rem; }
+  .steps li p { margin: 0; color: var(--muted); }
+
+  .final { text-align: center; padding: 3rem 0 3.5rem; }
+  .final .cta { justify-content: center; margin-top: 1.25rem; }
+
+  footer { border-top: 1px solid var(--border); padding: 1.5rem 0 2.5rem; font-size: .9rem; color: var(--muted); }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; }
+  footer a { color: var(--muted); }
+  footer .copy { margin-left: auto; }
+
+  @media (max-width: 760px) {
+    .hero { grid-template-columns: 1fr; text-align: center; padding-top: 1.5rem; }
+    .hero p.lead { margin-left: auto; margin-right: auto; }
+    .cta { justify-content: center; }
+    .grid, .steps ol { grid-template-columns: 1fr; }
+    header.top nav { display: none; }
+    footer .copy { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <img src="/images/mycv.png" alt="">
+    <strong>MYCV</strong>
+    <nav><a href="#features">Features</a><a href="#how">How it works</a><a href="/">More apps</a></nav>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1>Your resume, <span>ready in minutes.</span></h1>
+      <p class="lead">MYCV lets you write your resume on your phone, pick a clean template and share it as a polished PDF, wherever you are.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.divyakothari.mycv">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.6 1.8 13.4 12l-9.8 10.2c-.4-.2-.6-.7-.6-1.2V3c0-.5.2-1 .6-1.2Zm11.2 11.6 2.5 2.6-11.1 6.3 8.6-8.9Zm3.9-4 2.6 1.5c.9.5.9 1.8 0 2.3l-2.6 1.5-2.8-2.7 2.8-2.6ZM6.2 1.7l11.1 6.3-2.5 2.6-8.6-8.9Z"/></svg>
+          Get it on Google Play
+        </a>
+        <span class="btn btn-ghost">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.4 12.6c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.7-2-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.4-.9-1.7 0-3.3 1-4.2 2.6-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8 1.6 0 2 .8 3.4.8 1.4 0 2.3-1.3 3.1-2.5 1-1.4 1.4-2.8 1.4-2.9-.1 0-2.7-1-2.7-4.1ZM13.9 5c.7-.9 1.2-2 1-3.2-1 0-2.3.7-3 1.6-.7.8-1.2 2-1.1 3.1 1.2.1 2.3-.6 3.1-1.5Z"/></svg>
+          App Store: coming soon
+        </span>
+      </div>
+    </div>
+    <div class="phone" aria-hidden="true">
+      <div class="screen">
+        <div class="sheet-side">
+          <div class="avatar"></div>
+          <div class="l sec"></div><div class="l"></div><div class="l" style="width:80%"></div><div class="l" style="width:65%"></div>
+          <div class="l sec"></div><div class="l"></div><div class="l" style="width:70%"></div><div class="l" style="width:85%"></div><div class="l" style="width:60%"></div>
+        </div>
+        <div class="sheet-main">
+          <div class="l h"></div><div class="l sub"></div>
+          <div class="l sec"></div><div class="l"></div><div class="l"></div><div class="l" style="width:75%"></div>
+          <div class="l sec"></div><div class="l"></div><div class="l" style="width:90%"></div><div class="l"></div><div class="l" style="width:60%"></div>
+          <div class="l sec"></div><div class="l"></div><div class="l" style="width:85%"></div><div class="l" style="width:70%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="band" id="features">
+  <div class="wrap">
+    <h2>Everything a good resume needs</h2>
+    <p class="sub-h">No desktop and no formatting fights. Focus on what you've done; MYCV takes care of the layout.</p>
+    <div class="grid">
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div>
+        <h3>Edit on the go</h3>
+        <p>Add your profile, contact details and sections for work, education, skills and more, with rich text descriptions.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg></div>
+        <h3>Professional templates</h3>
+        <p>Switch between designed templates at any time; your content stays the same and the layout follows.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/></svg></div>
+        <h3>Share as PDF</h3>
+        <p>Preview exactly what recruiters will see and share a print-ready PDF by email, message or any app.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5-5 5 5"/><path d="M12 5v12"/></svg></div>
+        <h3>Import your old resume</h3>
+        <p>Already have a resume as a PDF? Import it and start from there instead of retyping everything.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M3 12h18"/><path d="M3 18h12"/></svg></div>
+        <h3>Organize your way</h3>
+        <p>Reorder sections and items, or hide the ones that don't fit the job you're applying for.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+        <h3>Saved to your account</h3>
+        <p>Sign in with Google, Apple or email. Your resume is kept in your account, and you can delete it any time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="steps" id="how">
+  <div class="wrap">
+    <h2>How it works</h2>
+    <p class="sub-h">Three steps from blank page to application.</p>
+    <ol>
+      <li><h3>Write</h3><p>Fill in your details, or import an existing PDF resume.</p></li>
+      <li><h3>Style</h3><p>Pick the template that suits you and preview the result.</p></li>
+      <li><h3>Share</h3><p>Export a PDF and send it straight to the job you want.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="band final">
+  <div class="wrap">
+    <h2>Start your next resume today</h2>
+    <p class="sub-h" style="margin-bottom:0">Download MYCV and have a PDF ready before your coffee gets cold.</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.divyakothari.mycv">Get it on Google Play</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a href="/mycv/privacy/">Privacy Policy</a>
+    <a href="/mycv/terms/">Terms and Conditions</a>
+    <a href="/mycv/delete-account/">Delete your account</a>
+    <a href="mailto:dkappsgames@gmail.com">Contact</a>
+    <span class="copy">&copy; 2026 DK Apps &amp; Games</span>
+  </div>
+</footer>
+
+</body>
+</html>
